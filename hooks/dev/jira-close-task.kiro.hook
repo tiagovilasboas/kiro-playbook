@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Finalizar Task no Jira",
+  "description": "Workflow completo de fechamento: preenche Causa Raiz, Resolução, registra horas em subtask e move para Pendente de Produção.",
+  "version": "2",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "O dev quer finalizar uma task. Execute este workflow:\n\n1. Pergunte: Qual task? (VSUS-XXX) e Quantas horas?\n2. Busque a task no Jira e analise o que foi feito (git log, arquivos alterados)\n3. Preencha customfield_10169 (Causa Raiz) no formato:\n   'O [componente] no endpoint [rota] tinha [N] problemas: 1. [Problema] — [consequência]. Cenário: [descrição]'\n4. Preencha customfield_10168 (Resolução) no formato:\n   '1. [Correção]. Arquivos: [lista]. PR: #[número] | Branch: [nome]'\n5. Crie subtask '[DEV] Implementação VSUS-XXX' se não existir\n6. Registre horas NA SUBTASK (NUNCA no incidente pai — automation do Jira rejeita)\n7. Mova task para 'Pendente de Produção'\n8. CONFIRME tudo com o dev antes de executar cada passo\n\nSe precisar de info, consulte o git log e arquivos alterados na branch atual."
+  }
+}

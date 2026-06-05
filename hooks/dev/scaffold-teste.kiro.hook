@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Scaffold PHPUnit Test",
+  "description": "Ao criar um novo arquivo *Test.php, gera estrutura básica PHPUnit seguindo convenções do time N3 (steering unit-tests).",
+  "version": "1",
+  "when": {
+    "type": "fileCreated",
+    "patterns": ["tests/**/*Test.php"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Um novo arquivo de teste foi criado: ${file}\n\nGere a estrutura básica PHPUnit seguindo as convenções do time N3:\n\n```php\n<?php\n\nnamespace Tests\\Unit; // ou Tests\\Feature, baseado no caminho\n\nuse Tests\\TestCase;\n\nclass [NomeDaClasse]Test extends TestCase\n{\n    // mock da classe sendo testada\n    private $subject;\n\n    protected function setUp(): void\n    {\n        parent::setUp();\n        // inicializar $this->subject\n    }\n\n    public function test_[descricao_do_cenario](): void\n    {\n        // Arrange\n        \n        // Act\n        \n        // Assert\n        $this->assertTrue(true); // substituir pelo assert real\n    }\n\n    protected function tearDown(): void\n    {\n        parent::tearDown();\n    }\n}\n```\n\nInfira o nome da classe a partir do nome do arquivo. Use mocks via createMock() se a classe testada tiver dependências.\nLembre: todo teste de sustentação deve reproduzir o cenário exato do incidente N3 antes de verificar o fix."
+  }
+}

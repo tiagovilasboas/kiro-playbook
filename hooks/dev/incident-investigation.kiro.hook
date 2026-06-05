@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Iniciar Investigação de Incidente N3",
+  "description": "Workflow estruturado de investigação N3: Jira → Grafana → Logs → Código → Banco → Hipóteses. Usa todos os MCPs disponíveis.",
+  "version": "2",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "O dev quer investigar um incidente N3. Execute este workflow completo:\n\n1. IDENTIFICAR: Pergunte qual task (VSUS-XXX) ou descreva o sintoma\n2. CONTEXTO: Busque no Jira a descrição, comentários e sellers afetados\n3. OBSERVABILIDADE: Verifique no Grafana (dashboard voomp-sustentacao-l3):\n   - KPIs gerais (taxa conversão caiu?)\n   - Vendas Perdidas (erros 500?)\n   - Webhooks com erro (entrega caiu?)\n   - Logs de erro (exceções recentes?)\n4. CÓDIGO: Identifique arquivos relevantes no repositório baseado no sintoma:\n   - Checkout → PaymentController, CreditCardPayment, BoletoPayment, PixPayment\n   - Webhooks → GreennWebhook, WebhookController\n   - Assinaturas → clients_has_contracts, PagarMe\n   - Reembolso → RefundHelper, refund_solicitations\n5. BANCO: Sugira queries para validar hipóteses (MySQL DEV se VPN ativa, ou Grafana PRD read-only)\n6. HIPÓTESES: Proponha 2-3 causas raiz ordenadas por probabilidade\n7. PLANO: Sugira próximos passos para confirmar e corrigir\n\nStack: PHP 7.4/Lumen | MySQL | Redis | Pagarme v4/v5 | Gateway V2 | Kafka\nTabelas: sales, clients_has_contracts, webhooks, refund_solicitations, products, leads"
+  }
+}

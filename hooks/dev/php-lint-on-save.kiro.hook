@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "PHP Lint on Save",
+  "description": "Verifica sintaxe PHP ao salvar arquivos em src/app. Detecta erros antes do commit.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": ["src/app/**/*.php"]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "php -l \"${file}\" 2>&1 | grep -v 'No syntax errors' || true"
+  }
+}

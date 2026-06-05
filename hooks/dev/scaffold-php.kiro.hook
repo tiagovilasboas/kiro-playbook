@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Scaffold PHP Class",
+  "description": "Ao criar um novo arquivo PHP em src/app, sugere namespace, docblock e estrutura básica de classe conforme padrões do time N3.",
+  "version": "1",
+  "when": {
+    "type": "fileCreated",
+    "patterns": ["src/app/**/*.php"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Um novo arquivo PHP foi criado: ${file}\n\nGere a estrutura básica da classe seguindo os padrões do time N3 (steering code-best-practices):\n1. Namespace correto baseado no caminho do arquivo (ex: App\\Helpers, App\\Services, App\\Http\\Controllers)\n2. Imports necessários (use statements)\n3. Docblock da classe com @package\n4. Declaração da classe com nome igual ao arquivo\n5. Se for Helper: método público principal com tipagem PHP 7.4\n6. Se for Controller: extends Controller com método index básico\n7. Se for Service: classe simples com construtor e método principal\n\nConvenções: classes em PascalCase, métodos em camelCase, sem código de lógica por enquanto."
+  }
+}
