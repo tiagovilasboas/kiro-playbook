@@ -1,0 +1,41 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Linux
+*~
+.nfs*
+
+# Editors
+*.swp
+*.swo
+*.swn
+.vscode/
+.idea/
+*.iml
+*.suo
+*.user
+*.sublime-workspace
+*.sublime-project
+
+# Node
+node_modules/
+package-lock.json
+
+# Generic
+*.log
+*.tmp
+*.temp
+*.bak
+*.orig
+*.pid
