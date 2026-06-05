@@ -1,0 +1,19 @@
+{
+  "name": "kiro-playbook",
+  "version": "3.0.0",
+  "description": "Configurações curadas do Kiro IDE para o time de sustentação N3",
+  "type": "module",
+  "bin": {
+    "kiro-install": "./bin/install.mjs"
+  },
+  "scripts": {
+    "install-kiro": "node bin/install.mjs",
+    "dry-run": "node bin/install.mjs --dry-run",
+    "test": "node --test tests/install.test.mjs",
+    "test:watch": "node --test --watch tests/install.test.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}

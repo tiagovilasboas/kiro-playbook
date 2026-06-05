@@ -1,0 +1,93 @@
+{
+  "version": "3.0.0",
+  "items": [
+    {
+      "id": "project-context",
+      "name": "Project Context",
+      "type": "steering",
+      "mcp_required": false,
+      "source": "steerings/project-context.md",
+      "destination": "~/.kiro/steering/project-context.md"
+    },
+    {
+      "id": "jira-workflows",
+      "name": "Jira Workflows",
+      "type": "steering",
+      "mcp_required": false,
+      "source": "steerings/jira-workflows.md",
+      "destination": "~/.kiro/steering/jira-workflows.md"
+    },
+    {
+      "id": "environments-deploy",
+      "name": "Environments & Deploy",
+      "type": "steering",
+      "mcp_required": false,
+      "source": "steerings/environments-deploy.md",
+      "destination": "~/.kiro/steering/environments-deploy.md"
+    },
+    {
+      "id": "incident-investigation",
+      "name": "Incident Investigation",
+      "type": "steering",
+      "mcp_required": false,
+      "source": "steerings/incident-investigation.md",
+      "destination": "~/.kiro/steering/incident-investigation.md"
+    },
+    {
+      "id": "code-best-practices",
+      "name": "Code Best Practices",
+      "type": "steering",
+      "mcp_required": false,
+      "source": "steerings/code-best-practices.md",
+      "destination": "~/.kiro/steering/code-best-practices.md"
+    },
+    {
+      "id": "payment-resilience",
+      "name": "Payment Resilience",
+      "type": "steering",
+      "mcp_required": false,
+      "source": "steerings/payment-resilience.md",
+      "destination": "~/.kiro/steering/payment-resilience.md"
+    },
+    {
+      "id": "unit-tests",
+      "name": "Unit Tests",
+      "type": "steering",
+      "mcp_required": false,
+      "source": "steerings/unit-tests.md",
+      "destination": "~/.kiro/steering/unit-tests.md"
+    },
+    {
+      "id": "incident-triage",
+      "name": "Incident Triage",
+      "type": "skill",
+      "mcp_required": false,
+      "source": "skills/incident-triage.md",
+      "destination": "~/.kiro/skills/incident-triage.md"
+    },
+    {
+      "id": "post-mortem",
+      "name": "Post-Mortem",
+      "type": "skill",
+      "mcp_required": false,
+      "source": "skills/post-mortem.md",
+      "destination": "~/.kiro/skills/post-mortem.md"
+    },
+    {
+      "id": "php-lint-on-save",
+      "name": "PHP Lint on Save",
+      "type": "hook",
+      "mcp_required": false,
+      "source": "hooks/dev/php-lint-on-save.kiro.hook",
+      "destination": "~/.kiro/hooks/php-lint-on-save.kiro.hook"
+    },
+    {
+      "id": "scaffold-teste",
+      "name": "Scaffold PHPUnit Test",
+      "type": "hook",
+      "mcp_required": false,
+      "source": "hooks/dev/scaffold-teste.kiro.hook",
+      "destination": "~/.kiro/hooks/scaffold-teste.kiro.hook"
+    }
+  ]
+}
