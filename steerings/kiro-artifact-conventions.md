@@ -58,7 +58,24 @@ inclusion: always
 ---
 ```
 
-Valid values: `always` (auto-loaded) or `manual` (loaded on demand).
+Valid values:
+
+| Value | Behavior |
+|-------|----------|
+| `always` | Auto-loaded in every interaction |
+| `manual` | Loaded on demand when referenced via `#name` in chat |
+| `fileMatch` | Loaded when a file matching `fileMatchPattern` is opened |
+
+For `fileMatch`, add `fileMatchPattern` to the frontmatter:
+
+```markdown
+---
+inclusion: fileMatch
+fileMatchPattern: "*Payment*.php,*Gateway*.php"
+---
+```
+
+> **Note:** `auto` is NOT a valid value. Use `always` instead.
 
 ## When creating new artifacts
 
