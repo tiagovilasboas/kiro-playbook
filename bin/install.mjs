@@ -197,19 +197,52 @@ Exemplos:
 
   const results = install(manifest.items, flags, { playbookDir: PLAYBOOK_DIR, home: HOME, cwd: CWD });
 
-  const icons = { install: '✓', update: '~', error: '✗', warn: '⚠', skipped: null };
-  for (const entry of results.log) {
-    if (entry.status === 'skipped') continue;
-    const icon = entry.dry ? (entry.status === 'update' ? '~' : '+') : icons[entry.status];
-    const suffix = entry.reason ? ` — ${entry.reason}` : '';
-    console.log(`  ${icon} ${entry.name}${suffix}`);
+  const icons = { install: '✓', update: '~', error: '✗', warn: '⚠', skipped: '⊘' };
+
+  // Mostra itens novos instalados
+  const newItems = results.log.filter(e => e.status === 'install');
+  if (newItems.length > 0) {
+    console.log('  Novos (instalados):');
+    for (const entry of newItems) {
+      const icon = entry.dry ? '+' : '✓';
+      console.log(`    ${icon} ${entry.name}`);
+    }
+  }
+
+  // Mostra itens atualizados
+  const updatedItems = results.log.filter(e => e.status === 'update');
+  if (updatedItems.length > 0) {
+    console.log('  Atualizados (backup criado antes):');
+    for (const entry of updatedItems) {
+      const icon = entry.dry ? '~' : '~';
+      console.log(`    ${icon} ${entry.name}`);
+    }
+  }
+
+  // Mostra itens preservados (já existiam, não foram tocados)
+  const skippedItems = results.log.filter(e => e.status === 'skipped');
+  if (skippedItems.length > 0) {
+    console.log('  Preservados (já existem, não tocados):');
+    for (const entry of skippedItems) {
+      console.log(`    ⊘ ${entry.name}`);
+    }
+  }
+
+  // Mostra erros e warnings
+  const errorItems = results.log.filter(e => e.status === 'error' || e.status === 'warn');
+  if (errorItems.length > 0) {
+    console.log('  Erros:');
+    for (const entry of errorItems) {
+      const icon = entry.status === 'warn' ? '⚠' : '✗';
+      console.log(`    ${icon} ${entry.name} — ${entry.reason}`);
+    }
   }
 
   const steerings = manifest.items.filter(i => i.type === 'steering').length;
   const skills    = manifest.items.filter(i => i.type === 'skill').length;
   const hooks     = manifest.items.filter(i => i.type === 'hook').length;
 
-  console.log(`\n  ${results.installed} instalado(s) · ${results.skipped} já existente(s) · ${results.errors} erro(s)`);
+  console.log(`\n  Resumo: ${results.installed} instalado(s) · ${results.skipped} preservado(s) · ${results.errors} erro(s)`);
 
   if (results.backed_up > 0) {
     const bkpDir = flags.target === 'global'
@@ -218,7 +251,9 @@ Exemplos:
     console.log(`  💾 ${results.backed_up} backup(s) em: ${bkpDir}`);
   }
   if (flags.dryRun) console.log('  ⚠ Dry-run — nenhum arquivo modificado');
-  if (results.skipped > 0 && !flags.update) console.log('  ℹ Itens existentes foram preservados. Use --update para atualizá-los.');
+  if (results.skipped > 0 && !flags.update) {
+    console.log('  ℹ Seus arquivos existentes NÃO foram alterados. Use --update para sincronizar com a versão do repo.');
+  }
   if (flags.target === 'global' && manifest.items.some(i => i.type === 'hook')) {
     console.log('  💡 Hooks globais não aparecem no painel. Use --target=workspace para ver no Kiro.');
   }
