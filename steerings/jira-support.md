@@ -59,6 +59,32 @@ PR: #[número] | Branch: [nome da branch]
 - NUNCA registrar worklog diretamente no bug pai
 - Criar subtask com título: `[DEV] [descrição da atividade]`
 
+### Formato padrão de subtask DEV
+
+A descrição deve ter:
+
+```markdown
+## Atividade
+[O que foi feito em 1 frase]
+
+## O que foi feito
+1. [Item 1]
+2. [Item 2]
+...
+
+## Horas
+[Xh] ([data], [período])
+
+## PR
+[#número](link) | Branch: `nome-da-branch`
+```
+
+Regras:
+- Objetiva: lista de itens, sem texto corrido
+- Sempre incluir horas gastas + data
+- Sempre incluir link do PR + branch
+- Descrição reflete o trabalho real, não o planejado
+
 ## Transições de status
 
 ### Fluxo completo do workflow VSUS
