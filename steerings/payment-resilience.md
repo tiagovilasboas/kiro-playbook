@@ -1,108 +1,110 @@
 ---
 inclusion: fileMatch
-fileMatchPattern: "*Payment*.php,*Gateway*.php"
+fileMatchPattern: "*Payment*.php,*Gateway*.php,*PagarMe*.php"
 ---
 
-# Resiliência em Pagamentos — 6 Regras de Ouro
+# Resiliência em Pagamentos — Padrões Obrigatórios
 
-> Você está editando código financeiro. Cada linha errada aqui pode resultar em venda duplicada, reembolso não processado ou cobrança indevida. Leia antes de modificar.
+## Contexto
 
-## Regra 1 — Idempotência Obrigatória
+Este arquivo é carregado automaticamente quando qualquer arquivo de pagamento/gateway é aberto. O checkout da Voomp processa dinheiro real — erros silenciosos geram cobrança dupla, perda de venda ou chargeback.
 
-Todo endpoint de pagamento deve ser idempotente. Se o cliente retentar, o resultado deve ser o mesmo.
+## Regras de Ouro
 
-```php
-// O IdempotencyPayMiddleware já cobre POST /checkout/payment
-// Upsell (POST /api/upsell) NÃO tem middleware de idempotência — atenção redobrada
-// Ao modificar lógica de upsell, verificar duplicatas manualmente
-```
-
-## Regra 2 — Log Antes e Depois de Chamadas Externas
+### 1. Nunca engolir exception de gateway
 
 ```php
-// ✅ Toda chamada ao gateway deve ter log de entrada e saída
-Log::info('gateway.charge.request', ['sale_id' => $id, 'amount' => $amount, 'method' => $method]);
-$response = $this->gateway->charge($payload);
-Log::info('gateway.charge.response', ['sale_id' => $id, 'status' => $response['status']]);
-```
-
-Sem isso, quando algo der errado em PRD, não há como investigar.
-
-## Regra 3 — Never Fail Silently
-
-```php
-// ❌ Nunca — esconde falhas de gateway
-if ($response['status'] === 'error') {
-    return null;
-}
-
-// ✅ Sempre — loga, lança exceção ou retorna erro explícito
-if ($response['status'] === 'error') {
-    Log::error('gateway.charge.failed', ['response' => $response]);
-    throw new GatewayChargeException($response['message']);
-}
-```
-
-## Regra 4 — Rollback Explícito em Transações Compostas
-
-```php
-// ✅ Toda operação multi-step deve ter rollback
-DB::beginTransaction();
+// ❌ PROIBIDO — venda fica com transaction_id = NULL
 try {
-    $sale = Sale::create($data);
-    $contract = Contract::create(['sale_id' => $sale->id]);
-    DB::commit();
-} catch (\Exception $e) {
-    DB::rollBack();
-    Log::error('sale.create.failed', ['error' => $e->getMessage()]);
+    $response = $pagarme->createSubscription($data);
+} catch (\Throwable $e) {
+    Log::error('erro', [$e->getMessage()]);
+}
+
+// ✅ OBRIGATÓRIO — atualiza status e propaga
+try {
+    $response = $pagarme->createSubscription($data);
+    if (empty($response->id)) {
+        throw new \RuntimeException('Gateway returned empty response');
+    }
+} catch (\Throwable $e) {
+    Log::error(__METHOD__ . ' failed', [
+        'sale_id' => $sale->id,
+        'error' => $e->getMessage()
+    ]);
+    $sale->update(['status' => 'refused', 'error_code' => $e->getCode()]);
     throw $e;
 }
 ```
 
-## Regra 5 — Validar Resposta do Gateway Antes de Confirmar
+### 2. Sempre verificar resposta do gateway
 
 ```php
-// ✅ Checar campos não-null ANTES de salvar
-if (empty($response['transaction_id']) || empty($response['status'])) {
-    Log::error('gateway.response.invalid', ['response' => $response]);
-    throw new InvalidGatewayResponseException();
+// ❌ Assume que response tem os campos
+$sale->transaction_id = $response->charge_id;
+
+// ✅ Valida antes de usar
+$chargeId = $response->charge_id ?? null;
+if (!$chargeId) {
+    Log::error('Gateway response missing charge_id', ['sale_id' => $sale->id]);
+    // tratar o cenário
 }
-// Só depois salvar no banco
-$sale->update(['transaction_id' => $response['transaction_id'], 'status' => 'paid']);
+$sale->transaction_id = $chargeId;
 ```
 
-## Regra 6 — Retry com Backoff Exponencial para Timeouts
+### 3. Idempotência em endpoints de pagamento
+
+Qualquer endpoint que cria venda ou cobrança DEVE ter proteção contra duplicatas:
+- `POST /payment` → tem `idempotencyPay` ✅
+- `POST /upsell` → ⚠️ PRECISA adicionar
+- `POST /extern/payment` → avaliar necessidade
+
+### 4. Timeout explícito em chamadas externas
 
 ```php
-// ✅ Para chamadas externas com timeout
-$attempt = 0;
-$maxAttempts = 3;
-while ($attempt < $maxAttempts) {
-    try {
-        return $this->gateway->charge($payload);
-    } catch (GatewayTimeoutException $e) {
-        $attempt++;
-        if ($attempt >= $maxAttempts) throw $e;
-        sleep(pow(2, $attempt)); // 2s, 4s, 8s
-    }
+// ❌ Sem timeout — pode travar 30s no default do PHP
+Http::post($url, $data);
+
+// ✅ Timeout explícito
+Http::timeout(10)->post($url, $data);
+```
+
+### 5. DB Transaction para operações multi-step
+
+```php
+// ❌ Sem transaction — estado parcial se falhar no meio
+$sale = Sale::create([...]);
+$contract = Contract::create([...]);
+$clientHasContract = ClientHasContracts::create([...]);
+
+// ✅ Tudo ou nada
+DB::beginTransaction();
+try {
+    $sale = Sale::create([...]);
+    $contract = Contract::create([...]);
+    $clientHasContract = ClientHasContracts::create([...]);
+    DB::commit();
+} catch (\Throwable $e) {
+    DB::rollBack();
+    throw $e;
 }
 ```
 
----
+### 6. Logging com contexto financeiro
 
-## Arquitetura de Pagamentos (Referência)
+Logs em código de pagamento DEVEM ter no mínimo:
+- `sale_id`
+- `product_id` ou `contract_id`
+- `client_id`
+- `amount` (quando relevante)
+- `gateway` / `method`
 
-| Tipo | Gateway | Fluxo | Arquivo principal |
-|---|---|---|---|
-| TRANSACTION (venda única) | Gateway V2 | Checkout → `GreennGatewayHelper::pay()` → Pagarme v5 | `CreditCardPayment.php`, `BoletoPayment.php` |
-| SUBSCRIPTION (1ª compra) | SDK Pagarme v4 direto | `$pagarme->createSubscription()` | `SubscriptionPayment.php` |
-| Renovação automática | Pagarme v4 nativo | Não passa pelo checkout | `clients_has_contracts` |
-| Upsell | Gateway V2 | POST /api/upsell — **sem middleware de idempotência** | `UpsellController.php` |
+## Checklist para Code Review de Pagamentos
 
-## Campos Críticos na Tabela `sales`
-
-| Campo | Nunca pode ser | Motivo |
-|---|---|---|
-| `transaction_id` | NULL em status `paid` | Sem tx_id não dá pra rastrear no gateway |
-| `status` | string arbitrária | Deve ser enum: `paid`, `refused`, `waiting_payment`, `refunded`, `chargedback` |
-| `contract_id` | NULL em SUBSCRIPTION | Quebra o fluxo de recorrência |
+- [ ] Exception não é engolida silenciosamente
+- [ ] Resposta do gateway é validada (campos não-null)
+- [ ] Timeout explícito em chamadas HTTP externas
+- [ ] Log tem contexto suficiente (sale_id, amount, etc.)
+- [ ] Não cria estado parcial (DB transaction se multi-step)
+- [ ] Idempotência protege contra double-click
+- [ ] Status da venda é atualizado em caso de falha (não fica 'created' eternamente)

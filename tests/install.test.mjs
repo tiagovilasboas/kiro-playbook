@@ -37,8 +37,8 @@ const STEERING_ITEM = {
   name: 'Test Steering',
   type: 'steering',
   mcp_required: false,
-  source: 'steerings/jira-workflows.md',
-  destination: '~/.kiro/steering/jira-workflows.md',
+  source: 'steerings/jira-support.md',
+  destination: '~/.kiro/steering/jira-support.md',
 };
 
 const SKILL_ITEM = {
@@ -122,7 +122,7 @@ describe('getDest — target=global', () => {
 
   test('steering → ~/.kiro/steering/ (macOS/Linux)', () => {
     assert.equal(getDest(STEERING_ITEM, flags, { home: '/home/dev' }),
-      '/home/dev/.kiro/steering/jira-workflows.md');
+      '/home/dev/.kiro/steering/jira-support.md');
   });
 
   test('skill → ~/.kiro/skills/', () => {
@@ -138,7 +138,7 @@ describe('getDest — target=global', () => {
   test('home Windows (C:\\Users\\dev) — substitui ~ corretamente', () => {
     const dest = getDest(STEERING_ITEM, flags, { home: 'C:\\Users\\dev' });
     assert.ok(dest.startsWith('C:\\Users\\dev'));
-    assert.ok(dest.endsWith('jira-workflows.md'));
+    assert.ok(dest.endsWith('jira-support.md'));
   });
 
   test('home com espaços no path funciona', () => {
@@ -155,7 +155,7 @@ describe('getDest — target=workspace', () => {
 
   test('steering → .kiro/steering/ do CWD', () => {
     assert.equal(getDest(STEERING_ITEM, flags, { cwd }),
-      join(cwd, '.kiro', 'steering', 'jira-workflows.md'));
+      join(cwd, '.kiro', 'steering', 'jira-support.md'));
   });
 
   test('skill → .kiro/skills/ do CWD', () => {
@@ -212,9 +212,9 @@ describe('backupFile', () => {
       mkdirSync: () => {},
       copyFileSync: () => {},
     };
-    const result = backupFile('/some/jira-workflows.md', '/backup', fsMock);
-    // Formato: 2026-06-05T10-30-00_jira-workflows.md
-    assert.match(result, /\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}_jira-workflows\.md$/);
+    const result = backupFile('/some/jira-support.md', '/backup', fsMock);
+    // Formato: 2026-06-05T10-30-00_jira-support.md
+    assert.match(result, /\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}_jira-support\.md$/);
   });
 
   test('copia o arquivo para o destino de backup', () => {
@@ -531,7 +531,7 @@ describe('getDest — cross-platform', () => {
   test('workspace usa path.join (separador nativo do OS)', () => {
     const dest = getDest(STEERING_ITEM, { target: 'workspace' },
       { cwd: join('C:', 'projects', 'repo') });
-    assert.ok(dest.endsWith('jira-workflows.md'));
+    assert.ok(dest.endsWith('jira-support.md'));
     assert.ok(dest.includes(sep) || dest.includes('/'));
   });
 
@@ -591,7 +591,7 @@ describe('integração — backup e restore em tmpdir', () => {
 
   test('install --update faz backup antes de sobrescrever', () => {
     // Arrange: arquivo já instalado com conteúdo "antigo"
-    const destFile = join(kiroDir, 'steering', 'jira-workflows.md');
+    const destFile = join(kiroDir, 'steering', 'jira-support.md');
     writeFileSync(destFile, '# Versão antiga customizada');
 
     const fsMock = {
@@ -623,7 +623,7 @@ describe('integração — backup e restore em tmpdir', () => {
   });
 
   test('install sem --update NÃO faz backup nem sobrescreve', () => {
-    const destFile = join(kiroDir, 'steering', 'jira-workflows.md');
+    const destFile = join(kiroDir, 'steering', 'jira-support.md');
     writeFileSync(destFile, '# Versão customizada do dev');
 
     const fsMock = {

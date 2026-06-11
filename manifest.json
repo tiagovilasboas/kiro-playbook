@@ -1,5 +1,5 @@
 {
-  "version": "3.0.0",
+  "version": "3.1.0",
   "items": [
     {
       "id": "project-context",
@@ -10,36 +10,44 @@
       "destination": "~/.kiro/steering/project-context.md"
     },
     {
-      "id": "jira-workflows",
-      "name": "Jira Workflows",
+      "id": "jira-support",
+      "name": "Jira Support",
       "type": "steering",
       "mcp_required": false,
-      "source": "steerings/jira-workflows.md",
-      "destination": "~/.kiro/steering/jira-workflows.md"
+      "source": "steerings/jira-support.md",
+      "destination": "~/.kiro/steering/jira-support.md"
     },
     {
-      "id": "environments-deploy",
-      "name": "Environments & Deploy",
+      "id": "jira-issue-naming",
+      "name": "Jira Issue Naming",
       "type": "steering",
       "mcp_required": false,
-      "source": "steerings/environments-deploy.md",
-      "destination": "~/.kiro/steering/environments-deploy.md"
+      "source": "steerings/jira-issue-naming.md",
+      "destination": "~/.kiro/steering/jira-issue-naming.md"
     },
     {
-      "id": "incident-investigation",
-      "name": "Incident Investigation",
+      "id": "deploy-environments",
+      "name": "Deploy Environments",
       "type": "steering",
       "mcp_required": false,
-      "source": "steerings/incident-investigation.md",
-      "destination": "~/.kiro/steering/incident-investigation.md"
+      "source": "steerings/deploy-environments.md",
+      "destination": "~/.kiro/steering/deploy-environments.md"
     },
     {
-      "id": "code-best-practices",
-      "name": "Code Best Practices",
+      "id": "code-review-routing",
+      "name": "Code Review Routing",
       "type": "steering",
       "mcp_required": false,
-      "source": "steerings/code-best-practices.md",
-      "destination": "~/.kiro/steering/code-best-practices.md"
+      "source": "steerings/code-review-routing.md",
+      "destination": "~/.kiro/steering/code-review-routing.md"
+    },
+    {
+      "id": "dor-dod-support",
+      "name": "DOR & DOD Support",
+      "type": "steering",
+      "mcp_required": false,
+      "source": "steerings/dor-dod-support.md",
+      "destination": "~/.kiro/steering/dor-dod-support.md"
     },
     {
       "id": "payment-resilience",
@@ -50,12 +58,60 @@
       "destination": "~/.kiro/steering/payment-resilience.md"
     },
     {
+      "id": "solid-php",
+      "name": "SOLID PHP",
+      "type": "steering",
+      "mcp_required": false,
+      "source": "steerings/solid-php.md",
+      "destination": "~/.kiro/steering/solid-php.md"
+    },
+    {
       "id": "unit-tests",
       "name": "Unit Tests",
       "type": "steering",
       "mcp_required": false,
       "source": "steerings/unit-tests.md",
       "destination": "~/.kiro/steering/unit-tests.md"
+    },
+    {
+      "id": "grafana",
+      "name": "Grafana Observability",
+      "type": "steering",
+      "mcp_required": false,
+      "source": "steerings/grafana.md",
+      "destination": "~/.kiro/steering/grafana.md"
+    },
+    {
+      "id": "onesignal-safe-testing",
+      "name": "OneSignal Safe Testing",
+      "type": "steering",
+      "mcp_required": false,
+      "source": "steerings/onesignal-safe-testing.md",
+      "destination": "~/.kiro/steering/onesignal-safe-testing.md"
+    },
+    {
+      "id": "post-mortem-support",
+      "name": "Post-Mortem Support",
+      "type": "steering",
+      "mcp_required": false,
+      "source": "steerings/post-mortem-support.md",
+      "destination": "~/.kiro/steering/post-mortem-support.md"
+    },
+    {
+      "id": "war-room",
+      "name": "War Room",
+      "type": "steering",
+      "mcp_required": false,
+      "source": "steerings/war-room.md",
+      "destination": "~/.kiro/steering/war-room.md"
+    },
+    {
+      "id": "kiro-artifact-conventions",
+      "name": "Kiro Artifact Conventions",
+      "type": "steering",
+      "mcp_required": false,
+      "source": "steerings/kiro-artifact-conventions.md",
+      "destination": "~/.kiro/steering/kiro-artifact-conventions.md"
     },
     {
       "id": "incident-triage",

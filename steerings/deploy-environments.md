@@ -89,21 +89,7 @@ inclusion: auto
 
 ---
 
-## Clusters AKS
-
-| Cluster | Resource Group | Ambiente |
-|---|---|---|
-| `aks-voomp-shd-eu-1` | `rg-voomp-shd-eu` | DEV / HML (East US) |
-| `aks-voomp-prd-bs-1` | `rg-voomp-prd-bs` | PRD (Brazil South) |
-
 ## Namespaces Kubernetes
 
 Para extraEnv funcionar, o namespace precisa existir no cluster com label `project: voomp`.
 Formato: `{namespace-base}-{extraEnv}` (ex: `voomp-creators-back-dev1`)
-
-**Serviços adjacentes relevantes para investigação:**
-
-| Serviço | Namespace | Cluster | Descrição |
-|---|---|---|---|
-| `seller-greenn-adm` | `voomp-creators-adm` | aks-voomp-shd-eu-1 (DEV/HML) | Admin Front Vue.js |
-| `seller-club-back` | `seller-club-back` | aks-voomp-shd-eu-1 (DEV/HML) | Acesso Club/Voomp Play |

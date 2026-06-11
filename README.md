@@ -49,19 +49,26 @@ node bin/install.mjs --target=workspace  # Instala no projeto atual (hooks visí
 
 ## O que está incluído
 
-### 7 steerings — contexto do time N3
+### 14 steerings — contexto do time N3
 
-Carregadas automaticamente ou ao abrir arquivos específicos. Ensinam o Kiro sobre a plataforma Voomp Creators, os padrões do time e o fluxo de trabalho do N3.
+Carregadas automaticamente ou ao abrir arquivos específicos. São as steerings reais que o time usa no dia a dia.
 
 | Steering | Inclusão | O que ensina ao Kiro |
 |---|---|---|
 | `project-context` | auto | Stack, repositórios, frentes de atuação, fluxo operacional |
-| `jira-workflows` | auto | Board VSUS, campos obrigatórios, estrutura de subtasks, transições |
-| `environments-deploy` | auto | DEV/HML/PRD, branches, pipeline 16417, clusters AKS |
-| `incident-investigation` | auto | Fluxo de investigação N3, queries SQL/Loki, arquitetura de pagamentos |
-| `code-best-practices` | fileMatch `*.php` | KISS, YAGNI, DRY, naming, error handling, MySQL, Redis |
+| `jira-support` | auto | Board VSUS, campos obrigatórios, estrutura de subtasks, transições |
+| `jira-issue-naming` | always | Padrão de nomenclatura de bugs, histórias e subtasks |
+| `deploy-environments` | auto | DEV/HML/PRD, branches, pipeline 16417, clusters AKS |
+| `code-review-routing` | always | Mapa de squads, regra de aprovação, quem revisar por domínio |
+| `dor-dod-support` | auto | Definition of Ready e Done do time N3 |
 | `payment-resilience` | fileMatch `*Payment*.php` | 6 regras de ouro para código financeiro |
+| `solid-php` | fileMatch `src/app/**/*.php` | SOLID aplicado ao projeto com exemplos reais |
 | `unit-tests` | fileMatch `*Test.php` | PHPUnit, comandos Docker, convenções PHP 7.4 |
+| `grafana` | manual | Dashboard, queries, datasources, runbook de investigação |
+| `onesignal-safe-testing` | manual | Regras de teste seguro — evita push acidental em PRD |
+| `post-mortem-support` | manual | Template e critérios de quando criar post-mortem |
+| `war-room` | manual | Fluxo de consolidação de branches para deploy PRD |
+| `kiro-artifact-conventions` | always | Padrões para criar hooks, steerings e skills no Kiro |
 
 ### 2 skills — capacidades especializadas do N3
 
@@ -132,7 +139,7 @@ Usa `node:test` nativo — zero dependências. Cobre o script de instalação: p
 
 ```
 kiro-playbook/
-├── steerings/        7 arquivos — contexto do time N3
+├── steerings/        14 arquivos — contexto do time N3
 ├── skills/           2 arquivos — capacidades especializadas
 ├── hooks/dev/        5 arquivos — 2 no MVP + 3 opcionais/legados
 ├── docs/prompts/     7 arquivos — fluxos com MCP como prompts
