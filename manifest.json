@@ -114,6 +114,14 @@
       "destination": "~/.kiro/steering/kiro-artifact-conventions.md"
     },
     {
+      "id": "n8n-workflows",
+      "name": "n8n Workflows",
+      "type": "steering",
+      "mcp_required": false,
+      "source": "steerings/n8n-workflows.md",
+      "destination": "~/.kiro/steering/n8n-workflows.md"
+    },
+    {
       "id": "incident-triage",
       "name": "Incident Triage",
       "type": "skill",
