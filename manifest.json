@@ -122,6 +122,38 @@
       "destination": "~/.kiro/steering/n8n-workflows.md"
     },
     {
+      "id": "confluence-support-structure",
+      "name": "Confluence Support Structure",
+      "type": "steering",
+      "mcp_required": false,
+      "source": "steerings/confluence-support-structure.md",
+      "destination": "~/.kiro/steering/confluence-support-structure.md"
+    },
+    {
+      "id": "minimal-change-principle",
+      "name": "Minimal Change Principle",
+      "type": "steering",
+      "mcp_required": false,
+      "source": "steerings/minimal-change-principle.md",
+      "destination": "~/.kiro/steering/minimal-change-principle.md"
+    },
+    {
+      "id": "no-assumptions",
+      "name": "No Assumptions Without Evidence",
+      "type": "steering",
+      "mcp_required": false,
+      "source": "steerings/no-assumptions.md",
+      "destination": "~/.kiro/steering/no-assumptions.md"
+    },
+    {
+      "id": "tradeoffs-decisions",
+      "name": "Tradeoffs & Decisions (ADR)",
+      "type": "steering",
+      "mcp_required": false,
+      "source": "steerings/tradeoffs-decisions.md",
+      "destination": "~/.kiro/steering/tradeoffs-decisions.md"
+    },
+    {
       "id": "incident-triage",
       "name": "Incident Triage",
       "type": "skill",
