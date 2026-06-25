@@ -10,11 +10,25 @@ inclusion: manual
 
 ## Datasources
 
-| Nome | UID | Tipo | Uso |
-|------|-----|------|-----|
-| ADMIN PRD REPLICA | dffty7wyygw00c | MySQL | Queries banco PRD (read-only) |
-| Loki | P82641446A07FFD78 | Loki | Logs de aplicação |
-| Prometheus | P25C19437FC9843A9 | Prometheus | Métricas de infra |
+| Nome | UID | Tipo | Ambiente | Uso |
+|------|-----|------|----------|-----|
+| ADMIN PRD REPLICA | dffty7wyygw00c | MySQL | PRD | Queries banco PRD (read-only) |
+| Loki - Dev | P23B868E2F845ACEC | Loki | DEV | Logs de aplicação em DEV |
+| Loki - Hml | PECD81ACA3B4E83B5 | Loki | HML | Logs de aplicação em HML |
+| Loki - Prd | P82641446A07FFD78 | Loki | PRD | Logs de aplicação em PRD |
+| loki - str | bflsa38540kjkf | Loki | STR | Logs de aplicação em STR |
+| Prometheus | P25C19437FC9843A9 | Prometheus | — | Métricas de infra |
+
+### Qual Loki usar
+
+| Situação | Datasource | UID |
+|----------|------------|-----|
+| Investigar bug em PRD | Loki - Prd | `P82641446A07FFD78` |
+| Validar fix deployado em DEV | Loki - Dev | `P23B868E2F845ACEC` |
+| Validar fix em HML antes de PRD | Loki - Hml | `PECD81ACA3B4E83B5` |
+| Teste de stress/carga | loki - str | `bflsa38540kjkf` |
+
+> **IMPORTANTE:** Todos os ambientes (DEV, HML, PRD, STR) têm datasource Loki disponível no Grafana. Ao investigar logs, usar o UID do ambiente correto.
 
 ## Executar queries MySQL via API
 
