@@ -1,0 +1,62 @@
+name: Improve playbook
+description: Suggest an improvement to a steering, skill, hook, prompt, or the installer.
+title: "playbook: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Propose a small, checkable change to this playbook.
+        See [CONTRIBUTING.md](https://github.com/tiagovilasboas/kiro-playbook/blob/main/CONTRIBUTING.md).
+        Write in English when possible. Do not paste secrets or MCP credentials.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of the playbook should change?
+      options:
+        - steering
+        - skill
+        - hook
+        - prompt
+        - installer
+        - docs
+        - other
+    validations:
+      required: true
+
+  - type: input
+    id: artifact
+    attributes:
+      label: Artifact path (optional)
+      description: Existing file if you know it (for example `steerings/example.md`).
+      placeholder: steerings/example.md
+
+  - type: textarea
+    id: gap
+    attributes:
+      label: What should change?
+      description: What is missing, outdated, or unclear?
+      placeholder: The installer dry-run output does not list skipped files.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Smallest edit that closes the gap.
+      placeholder: Add a skipped-files line to the dry-run summary in bin/install.mjs.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - label: This does not invent MCP secrets or credentials.
+          required: true
+        - label: If this is hygiene-only, existing team artifacts stay unchanged.
+          required: false
