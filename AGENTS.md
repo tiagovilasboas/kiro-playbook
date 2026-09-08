@@ -5,9 +5,9 @@ Humans: follow [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## What this repo is
 
-A **Kiro playbook**: curated steerings, skills, and hooks as a **starting point** for agentic IDE configs.
+A **Kiro playbook for a support squad**: curated steerings, skills, and hooks as a **team starting point** for agentic IDE configs.
 
-Artifacts here reflect a **support / N3-style** stack as **examples** (issue flow, incident triage, language and platform conventions). They are not a universal recipe. Adapt them to your context.
+The Cogna / N3 voice is **intentional**. Artifacts are real N3/support-style examples (issue flow, incident triage, platform conventions) — not a pretend personal-only showcase and not a universal recipe. Adapt them; do not sanitize the team voice in hygiene PRs.
 
 ## Layout
 
@@ -38,14 +38,14 @@ Equivalent scripts: `npm run dry-run`, `npm run install-kiro`.
 
 - Open a pull request. Do **not** commit directly to `main`.
 - Keep the installer and `npm test` green.
-- Preserve existing steerings, skills, hooks, and prompts unless the change is a dedicated content PR.
-- Treat support / N3 examples as illustrations, not production credentials.
+- Preserve existing steerings, skills, hooks, prompts, and README voice unless the change is a dedicated content PR.
+- Treat N3/support examples as team context, not production credentials.
 
 ## Don't
 
 - Do not invent MCP secrets, tokens, or host credentials.
-- Do not rewrite team-specific steerings in hygiene or scaffolding PRs.
-- Do not treat this playbook as a one-size-fits-all recipe for every squad or IDE.
+- Do not rewrite team-specific steerings or erase Cogna/N3 voice in hygiene PRs.
+- Do not treat this playbook as a one-size-fits-all recipe, or as a personal-only kit.
 - Do not merge your own PRs; a human reviews.
 
 ## Hygiene vs content
