@@ -1,4 +1,12 @@
-# Contributing to kiro-playbook
+# Contributing
+
+English for pull requests (what / why / risk). Teaching text below stays Portuguese on purpose — public N3 playbook, not a skill dump.
+
+This repo is a starting point (`steerings/`, `skills/`, `hooks/`, `docs/prompts/`). Do not invent skills. Do not add Cogna client IP.
+
+MIT — see [LICENSE](LICENSE).
+
+---
 
 Este repositório distribui artefatos Kiro para a Squad Sustentação N3. Mas antes de tudo, uma coisa precisa ficar clara.
 

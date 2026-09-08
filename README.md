@@ -1,36 +1,13 @@
 # kiro-playbook
 
-> Kiro é uma ferramenta pessoal. Este repositório não é uma receita de bolo — é um ponto de partida para você criar os seus próprios superpoderes.
+Steerings, skills, and hooks that turn an agentic IDE into a squad specialist. Starting point, not a universal recipe.
 
----
+## Start
 
-## A ideia
-
-Não existe configuração de Kiro que funcione para todo mundo. O que funciona para um dev pode não fazer sentido para outro. O valor real do Kiro vem de como **você** o configura para **o seu contexto** — não de instalar um pacote pronto e esperar mágica.
-
-Este repositório compartilha o que funciona para o time N3 como ponto de partida. Alguns artefatos refletem padrões do time (fluxo Jira, critérios de severidade, arquitetura de pagamentos) — esses fazem sentido para todo mundo aqui. Mas a maioria das configurações mais valiosas que você vai usar são as que **você mesmo criar**, adaptadas ao seu jeito de trabalhar e aos problemas que você resolve todo dia.
-
-> **Padronização de Kiro é um mito. A melhor configuração é a que resolve o seu problema.**
-
-Os artefatos deste repo são um espelho do conhecimento coletivo do time N3. Eles existem para você aprender o padrão e depois superá-lo — não para te prender a ele.
-
----
-
-## O que está incluído e por quê
-
-Estão aqui apenas os artefatos que:
-1. Refletem padrões **reais do time** (não opinião de um dev) — fluxo Jira, critérios N3, stack da plataforma
-2. Funcionam **sem MCP** — qualquer dev usa no primeiro clone, sem configuração extra
-3. Geram **valor imediato** — o dev percebe o ganho na primeira semana
-
-O que não está aqui também é uma decisão. Se não entrou, é porque ou depende de MCP (virou prompt) ou ainda não foi validado como padrão do time.
-
----
-
-## Instalação
+Copy this first:
 
 ```bash
-git clone https://github.com/cogna/kiro-playbook.git
+git clone https://github.com/tiagovilasboas/kiro-playbook.git
 cd kiro-playbook
 node bin/install.mjs
 ```
@@ -146,6 +123,15 @@ kiro-playbook/
 ├── docs/             mcp-guide.md, profiles-guide.md
 ├── bin/install.mjs
 ├── manifest.json
+├── LICENSE
 ├── CONTRIBUTING.md   ← como criar os seus próprios artefatos
 └── CHANGELOG.md
 ```
+
+## Contributing
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+## License
+
+[MIT](LICENSE)
