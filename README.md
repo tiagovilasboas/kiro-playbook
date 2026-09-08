@@ -149,3 +149,6 @@ kiro-playbook/
 ├── CONTRIBUTING.md   ← como criar os seus próprios artefatos
 └── CHANGELOG.md
 ```
+
+License: MIT
+Agents: see AGENTS.md
